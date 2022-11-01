@@ -21,7 +21,7 @@ import java.util.UUID;
 
 @Controller
 public class HomeController {
-    record TaskItem(String id, String place, String groupname, String deadline, boolean done) {
+    record TaskItem(String id, String place, String groupname, String startdatetime, String enddatetime, boolean done) {
     }
 
     private List<TaskItem> taskItems = new ArrayList<>();
@@ -48,9 +48,10 @@ public class HomeController {
     @GetMapping("/add")
     String addItem(@RequestParam("place") String place,
                    @RequestParam("groupname") String groupname,
-                   @RequestParam("deadline") String deadline) {
+                   @RequestParam("startdatetime") String startdatetime,
+                   @RequestParam("enddatetime") String enddatetime) {
         String id = UUID.randomUUID().toString().substring(0, 8);
-        TaskItem item = new TaskItem(id, place, groupname, deadline, false);
+        TaskItem item = new TaskItem(id, place, groupname, startdatetime, enddatetime ,false);
         dao.add(item);
         return "redirect:/list";
     }
@@ -65,9 +66,10 @@ public class HomeController {
     String updateItem(@RequestParam("id") String id,
                       @RequestParam("place") String place,
                       @RequestParam("groupname") String groupname,
-                      @RequestParam("deadline") String deadline,
+                      @RequestParam("startdatetime") String startdatetime,
+                      @RequestParam("enddatetime") String enddatetime,
                       @RequestParam("done") boolean done) {
-        TaskItem taskItem = new TaskItem(id, place, groupname, deadline, done);
+        TaskItem taskItem = new TaskItem(id, place, groupname, startdatetime, enddatetime, done);
         dao.update(taskItem);
         return "redirect:/list";
     }

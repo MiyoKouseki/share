@@ -18,7 +18,9 @@
     <label>利用団体名</label>
     <input name="groupname" type="text"/>
     <label>開始日時</label>
-    <input name="deadline" type="datetime-local" step="1800"/>
+    <input name="startdatetime" type="datetime-local" step="1800"/>
+    <label>修了日時</label>
+    <input name="enddatetime" type="datetime-local" step="1800"/>
     <input type="submit" vaule="登録" />
   </form>
 </div>
@@ -42,7 +44,8 @@
       <td class="hidden" th:text="${task.id}"></td>
       <td th:text="${task.place}"></td>
       <td th:text="${task.groupname}"></td>
-      <td width="100px" th:text="${task.deadline}"></td>
+      <td width="100px" th:text="${task.startdatetime}"></td>
+      <td width="100px" th:text="${task.enddatetime}"></td>
       <td width="50px" th:text="${task.done} ? '承認済': '未承認'"></td>
       <td width="50px">
         <button type="submit" id="update_button" onclick="
@@ -50,8 +53,9 @@
                                 getElementById('update_id').value=row.cells[0].firstChild.data;
                                 getElementById('update_place').value=row.cells[1].firstChild.data;
                                 getElementById('update_groupname').value=row.cells[2].firstChild.data;
-                                getElementById('update_deadline').value=row.cells[3].firstChild.data;
-                                getElementById('update_status').selectedIndex=(row.cells[4].firstChild.data=='完了')?1:0;
+                                getElementById('update_startdatetime').value=row.cells[3].firstChild.data;
+                                getElementById('update_enddatetime').value=row.cells[4].firstChild.data;
+                                getElementById('update_status').selectedIndex=(row.cells[5].firstChild.data=='完了')?1:0;
                                 var dialog = getElementById('updateDialog');
                                 dialog.style.left = ((window.innerWidth - 500) / 2) + 'px';
                                 dialog.style.display = 'block';
@@ -78,7 +82,9 @@
       <label>利用団体名</label>
       <input id="update_groupname" name="groupname" type="text" />
       <label>開始日時</label>
-      <input id="update_deadline" name="deadline" type="datetime-local" step="1800"/>
+      <input id="update_startdatetime" name="startdatetime" type="datetime-local" step="1800"/>
+      <label>修了日時</label>
+      <input id="update_enddatetime" name="enddatetime" type="datetime-local" step="1800"/>
       <label>状態</label>
       <select id="update_status" name="done">
         <option value="false">未承認</option>

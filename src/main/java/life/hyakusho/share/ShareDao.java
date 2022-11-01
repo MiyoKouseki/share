@@ -40,7 +40,8 @@ public class ShareDao {
                         row.get("id").toString(),
                         row.get("place").toString(),
                         row.get("groupname").toString(),
-                        row.get("deadline").toString(),
+                        row.get("startdatetime").toString(),
+                        row.get("enddatetime").toString(),
                         (Boolean)row.get("done")))
                 .toList();
         return taskItems;
@@ -53,10 +54,11 @@ public class ShareDao {
 
     public int update(TaskItem taskItem) {
         int number = jdbcTemplate.update(
-                "UPDATE tasklist SET place = ?, groupname = ?, deadline = ?, done = ? WHERE id = ?",
+                "UPDATE tasklist SET place = ?, groupname = ?, startdatetime = ?, enddatetime = ?, done = ? WHERE id = ?",
                 taskItem.place(),
                 taskItem.groupname(),
-                taskItem.deadline(),
+                taskItem.startdatetime(),
+                taskItem.enddatetime(),
                 taskItem.done(),
                 taskItem.id());
         return number;
