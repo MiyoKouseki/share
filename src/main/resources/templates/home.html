@@ -14,7 +14,7 @@
 
   <form action="/add">
     <label>場所</label>
-    <input name="task" type="text"/>
+    <input name="place" type="text"/>
     <label>開始日時</label>
     <input name="deadline" type="date" />
     <input type="submit" vaule="登録" />
@@ -37,7 +37,7 @@
     <tbody>
     <tr th:each="task : ${taskList}">
       <td class="hidden" th:text="${task.id}"></td>
-      <td th:text="${task.task}"></td>
+      <td th:text="${task.place}"></td>
       <td width="100px" th:text="${task.deadline}"></td>
       <td width="50px" th:text="${task.done} ? '承認済': '未承認'"></td>
       <td width="50px">
@@ -69,7 +69,7 @@
     <form action="/update">
       <input id="update_id" name="id" type="hidden" />
       <label>タスク</label>
-      <input id="update_task" name="task" type="text" />
+      <input id="update_task" name="place" type="text" />
       <label>開始日時</label>
       <input id="update_deadline" name="deadline" type="date" />
       <label>状態</label>
