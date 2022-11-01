@@ -2,33 +2,33 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>タスク管理アプリケーション</title>
+  <title>桜ヶ丘体育施設予約管理</title>
   <link th:href="@{/home.css}" rel="stylesheet">
 </head>
 
 <body>
-<h1>タスク管理アプリケーション</h1>
+<h1>桜ヶ丘体育施設予約管理</h1>
 
 <div class="task_form">
-  <h2>タスクの管理</h2>
+  <h2>予約管理</h2>
 
   <form action="/add">
-    <label>タスク</label>
+    <label>場所</label>
     <input name="task" type="text"/>
-    <label>期限</label>
+    <label>開始日時</label>
     <input name="deadline" type="date" />
     <input type="submit" vaule="登録" />
   </form>
 </div>
 
 <div class="tasklist">
-  <h2>現在のタスク一覧</h2>
+  <h2>予約一覧</h2>
   <table border="1">
     <thead>
     <tr>
       <th class="hidden">ID</th>
-      <th>タスク</th>
-      <th width="150px">期限</th>
+      <th>場所</th>
+      <th width="150px">開始日時</th>
       <th width="100px">状態</th>
       <th></th>
       <th></th>
@@ -39,7 +39,7 @@
       <td class="hidden" th:text="${task.id}"></td>
       <td th:text="${task.task}"></td>
       <td width="100px" th:text="${task.deadline}"></td>
-      <td width="50px" th:text="${task.done} ? '完了': '未完了'"></td>
+      <td width="50px" th:text="${task.done} ? '承認済': '未承認'"></td>
       <td width="50px">
         <button type="submit" id="update_button" onclick="
                                 let row = this.parentElement.parentElement;
@@ -70,12 +70,12 @@
       <input id="update_id" name="id" type="hidden" />
       <label>タスク</label>
       <input id="update_task" name="task" type="text" />
-      <label>期限</label>
+      <label>開始日時</label>
       <input id="update_deadline" name="deadline" type="date" />
       <label>状態</label>
       <select id="update_status" name="done">
-        <option value="false">未完了</option>
-        <option value="true">完了</option>
+        <option value="false">未承認</option>
+        <option value="true">承認済</option>
       </select>
       <div>
         <button type="submit">更新</button>
