@@ -15,6 +15,8 @@
   <form action="/add">
     <label>場所</label>
     <input name="place" type="text"/>
+    <label>利用団体名</label>
+    <input name="groupname" type="text"/>
     <label>開始日時</label>
     <input name="deadline" type="datetime-local" step="1800"/>
     <input type="submit" vaule="登録" />
@@ -28,6 +30,7 @@
     <tr>
       <th class="hidden">ID</th>
       <th>場所</th>
+      <th>利用団体名</th>
       <th width="150px">開始日時</th>
       <th width="100px">状態</th>
       <th></th>
@@ -38,15 +41,17 @@
     <tr th:each="task : ${taskList}">
       <td class="hidden" th:text="${task.id}"></td>
       <td th:text="${task.place}"></td>
+      <td th:text="${task.groupname}"></td>
       <td width="100px" th:text="${task.deadline}"></td>
       <td width="50px" th:text="${task.done} ? '承認済': '未承認'"></td>
       <td width="50px">
         <button type="submit" id="update_button" onclick="
                                 let row = this.parentElement.parentElement;
                                 getElementById('update_id').value=row.cells[0].firstChild.data;
-                                getElementById('update_task').value=row.cells[1].firstChild.data;
-                                getElementById('update_deadline').value=row.cells[2].firstChild.data;
-                                getElementById('update_status').selectedIndex=(row.cells[3].firstChild.data=='完了')?1:0;
+                                getElementById('update_place').value=row.cells[1].firstChild.data;
+                                getElementById('update_groupname').value=row.cells[2].firstChild.data;
+                                getElementById('update_deadline').value=row.cells[3].firstChild.data;
+                                getElementById('update_status').selectedIndex=(row.cells[4].firstChild.data=='完了')?1:0;
                                 var dialog = getElementById('updateDialog');
                                 dialog.style.left = ((window.innerWidth - 500) / 2) + 'px';
                                 dialog.style.display = 'block';
@@ -65,13 +70,15 @@
 
 <div id="updateDialog">
   <div class="task_form">
-    <h2>タスクの更新</h2>
+    <h2>予約の更新</h2>
     <form action="/update">
       <input id="update_id" name="id" type="hidden" />
-      <label>タスク</label>
-      <input id="update_task" name="place" type="text" />
+      <label>場所</label>
+      <input id="update_place" name="place" type="text" />
+      <label>利用団体名</label>
+      <input id="update_groupname" name="groupname" type="text" />
       <label>開始日時</label>
-      <input id="update_deadline" name="deadline" type="date" />
+      <input id="update_deadline" name="deadline" type="datetime-local" step="1800"/>
       <label>状態</label>
       <select id="update_status" name="done">
         <option value="false">未承認</option>

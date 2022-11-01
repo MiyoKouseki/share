@@ -39,6 +39,7 @@ public class ShareDao {
                 .map((Map<String, Object> row) -> new TaskItem(
                         row.get("id").toString(),
                         row.get("place").toString(),
+                        row.get("groupname").toString(),
                         row.get("deadline").toString(),
                         (Boolean)row.get("done")))
                 .toList();
@@ -52,8 +53,9 @@ public class ShareDao {
 
     public int update(TaskItem taskItem) {
         int number = jdbcTemplate.update(
-                "UPDATE tasklist SET place = ?, deadline = ?, done = ? WHERE id = ?",
+                "UPDATE tasklist SET place = ?, groupname = ?, deadline = ?, done = ? WHERE id = ?",
                 taskItem.place(),
+                taskItem.groupname(),
                 taskItem.deadline(),
                 taskItem.done(),
                 taskItem.id());
