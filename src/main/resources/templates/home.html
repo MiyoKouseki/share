@@ -2,54 +2,102 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>桜ヶ丘体育施設予約管理</title>
-  <link th:href="@{/home.css}" rel="stylesheet">
+  <meta name="author" content="Miyo Kouseki ">
+  <title>桜ヶ丘体育施設予約管理ページ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- JS読み込み -->
+  <script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
+  <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+  <!-- CSS読み込み -->
+  <link rel="stylesheet"
+        th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+  <style type="text/css">
+    .container {
+    max-width:960px;
+  }
+  </style>
 </head>
 
-<body>
-<h1>桜ヶ丘体育施設予約管理</h1>
-
-<div class="task_form">
-  <h2>予約管理</h2>
-
-  <form action="/add">
-    <label>場所</label>
-    <input name="place" type="text"/>
-    <label>利用団体名</label>
-    <input name="groupname" type="text"/>
-    <label>開始日時</label>
-    <input name="startdatetime" type="datetime-local" step="1800"/>
-    <label>終了日時</label>
-    <input name="enddatetime" type="datetime-local" step="1800"/>
-    <input type="submit" vaule="登録" />
-  </form>
-</div>
-
-<div class="tasklist">
-  <h2>予約一覧</h2>
-  <table border="1">
-    <thead>
-    <tr>
-      <th class="hidden">ID</th>
-      <th>場所</th>
-      <th>利用団体名</th>
-      <th width="150px">開始日時</th>
-      <th width="150px">終了日時</th>
-      <th width="100px">状態</th>
-      <th></th>
-      <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="task : ${taskList}">
-      <td class="hidden" th:text="${task.id}"></td>
-      <td th:text="${task.place}"></td>
-      <td th:text="${task.groupname}"></td>
-      <td width="100px" th:text="${task.startdatetime}"></td>
-      <td width="100px" th:text="${task.enddatetime}"></td>
-      <td width="50px" th:text="${task.done} ? '承認済': '未承認'"></td>
-      <td width="50px">
-        <button type="submit" id="update_button" onclick="
+<body class="bg-light">
+<div class="container">
+  <main>
+  <div class="py-5 text-center">
+    <h2>桜ヶ丘体育施設予約管理ページ</h2>
+    <p class="lead"></div>
+  <div class="row b-5">
+    <div class="col-md-5 col-lg-4 order-md-last">
+      <h4 class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-3">あなたの情報</h4>
+      </h4>
+      <ul class="list-group mb-3">
+        <li class="list-group-item d-flex justify-content-between lh-sm">
+          <div>
+            <h6 class="my-0">団体名</h6>
+          </div>
+          <span class="text-muted">管理者メンバー</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between lh-sm">
+          <div>
+            <h6 class="my-0">団体代表者</h6>
+            <small class="text-muted"></small>
+          </div>
+          <span class="text-muted">神岡太郎</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-7 col-lg-8">
+      <form action="/add">
+        <h4 class="mb-3 text-primary">予約登録</h4>
+        <fieldset class="form-group" id="datepicker-default">
+          <div class="row g-5">
+            <div class="col-12">
+              <label for="place" class="form-label">場所</label>
+              <input name="place" type="text" class="form-control" placeholder="桜ヶ丘体育館第2会議室"/>
+            </div>
+            <div class="col-12">
+              <label for="groupname" class="form-label">利用団体名</label>
+              <input name="groupname" type="text" class="form-control" placeholder="神岡クリエイターズ"/>
+            </div>
+            <div class="col-sm-6">
+              <label for="startdatetime" class="form-label">開始日時</label>
+              <input name="startdatetime" type="datetime-local" step="1800" class="form-control" placeholder="開始日時"/>
+            </div>
+            <div class="col-sm-6">
+              <label for="enddatetime" class="form-label">終了日時</label>
+              <input name="enddatetime" type="datetime-local" step="1800" class="form-control" placeholder="終了日時"/>
+            </div>
+          </div>
+        </fieldset>
+        <button type="submit" class="btn btn-outline-primary btn-lg">登録</button>
+      </form>
+    </div>
+    <div class="col-md-12 order-md-last">
+      <hr class="my-4">
+      <h4 class="mb-3">予約一覧</h4>
+      <table class="table table-hover">
+        <thead>
+           <tr>
+            <th class="hidden" scope="col">ID</th>
+            <th scope="col">場所</th>
+            <th scope="col">利用団体名</th>
+            <th scope="col">開始日時</th>
+            <th scope="col">終了日時</th>
+            <th scope="col">承認</th>
+            <th></th>
+            <th></th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr th:each="task : ${taskList}">
+            <td class="hidden" th:text="${task.id}"></td>
+            <td th:text="${task.place}"></td>
+            <td th:text="${task.groupname}"></td>
+            <td width="100px" th:text="${task.startdatetime}"></td>
+            <td width="100px" th:text="${task.enddatetime}"></td>
+            <td width="50px" th:text="${task.done} ? '済': '未'"></td>
+            <td width="50px">
+              <button type="submit" class="btn btn-outline-primary" data-toggle="modal"
+                      data-target="#modal1" onclick="
                                 let row = this.parentElement.parentElement;
                                 getElementById('update_id').value=row.cells[0].firstChild.data;
                                 getElementById('update_place').value=row.cells[1].firstChild.data;
@@ -61,43 +109,84 @@
                                 dialog.style.left = ((window.innerWidth - 500) / 2) + 'px';
                                 dialog.style.display = 'block';
                             ">更新</button>
-      </td>
-      <td width="50px">
-        <form action="/delete">
-          <button type="submit" id="delete_button">削除</button>
-          <input type="hidden" name="id" th:value="${task.id}" />
-        </form>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+            </td>
+            <td width="50px">
+              <form action="/delete">
+                <button type="submit" class="btn btn-outline-danger" id="delete_button">削除</button>
+                <input type="hidden" name="id" th:value="${task.id}" />
+              </form>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </table>
+    </div>
+  </div>
+  </main>
 </div>
 
-<div id="updateDialog">
-  <div class="task_form">
-    <h2>予約の更新</h2>
-    <form action="/update">
-      <input id="update_id" name="id" type="hidden" />
-      <label>場所</label>
-      <input id="update_place" name="place" type="text" />
-      <label>利用団体名</label>
-      <input id="update_groupname" name="groupname" type="text" />
-      <label>開始日時</label>
-      <input id="update_startdatetime" name="startdatetime" type="datetime-local" step="1800"/>
-      <label>修了日時</label>
-      <input id="update_enddatetime" name="enddatetime" type="datetime-local" step="1800"/>
-      <label>状態</label>
-      <select id="update_status" name="done">
-        <option value="false">未承認</option>
-        <option value="true">承認済</option>
-      </select>
-      <div>
-        <button type="submit">更新</button>
-        <button type="reset"
-                onclick="getElementById('updateDialog').style.display='none';">
-          キャンセル</button>
+<div class="modal fade" id="modal1" tabindex="-1"
+     role="dialog" aria-labelledby="label1" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="label1">予約の更新</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-    </form>
+      <div class="modal-body">
+        <div id="updateDialog">
+          <div class="task_form">
+            <form action="/update">
+              <fieldset class="form-group" id="datepicker-default">
+                <div class="row g-5">
+                  <div class="col-12">
+                    <input id="update_id" name="id" type="hidden" />
+                  </div>
+                  <div class="col-12">
+                    <label for="place" class="form-label">場所</label>
+                    <input id="update_place" name="place" type="text" class="form-control" placeholder="桜ヶ丘体育館第2会議室"/>
+                  </div>
+                  <div class="col-12">
+                    <label for="groupname" class="form-label">利用団体名</label>
+                    <input id="update_groupname" name="groupname" type="text" class="form-control" placeholder="神岡クリエイターズ"/>
+                  </div>
+                  <div class="col-sm-6">
+                    <label for="startdatetime" class="form-label">開始日時</label>
+                    <input id="update_startdatetime" name="startdatetime" type="datetime-local" step="1800" class="form-control" placeholder="開始日時"/>
+                  </div>
+                  <div class="col-sm-6">
+                    <label for="enddatetime" class="form-label">終了日時</label>
+                    <input id="update_enddatetime" name="enddatetime" type="datetime-local" step="1800" class="form-control" placeholder="終了日時"/>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label id="update_status" for="status" class="form-label">承認</label>
+                  <select class="corm-control" id="update_status" name="done">
+                    <option value="false">未</option>
+                    <option value="true">済</option>
+                  </select>
+                </div>
+              </fieldset>
+              <div>
+                <button type="submit">更新</button>
+                <button type="reset"
+                        onclick="getElementById('updateDialog').style.display='none';">
+                  キャンセル</button>
+              </div>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+        <button type="submit" class="btn btn-primary" >更新</button>
+      </div>
+    </div>
   </div>
 </div>
 
